@@ -8,7 +8,11 @@ router.get('/', async (req, res) => {
   // be sure to include its associated Products
   try {
     const categoryData = await Category.findAll({
-      include: [{ model: Product }],
+      include: [{ 
+        model: Product,
+        required: true,
+        group: 'category_id' 
+      }],
     });
     res.status(200).json(categoryData);
   } catch (err) {
@@ -21,7 +25,11 @@ router.get('/:id', async (req, res) => {
   // be sure to include its associated Products
   try {
     const categoryData = await Category.findByPk(req.params.id, {
-      include: [{ model: Product }],
+      include: [{ 
+        model: Product,
+        required: true,
+        group: 'category_id' 
+       }],
     });
 
     if (!categoryData) {
@@ -49,8 +57,7 @@ router.post('/', async (req, res) => {
 
 router.put('/:id', async (req, res) => {
   try {
-    const categoryData = await Category.update({
-      category_name: req.body.category_name,
+    const categoryData = await Category.update(req.body, {
       where: {
         id: req.params.id,
       },
@@ -61,7 +68,7 @@ router.put('/:id', async (req, res) => {
       return;
     }
 
-    res.status(200).json(libraryCardData);
+    res.status(200).json(categoryData);
   } catch (err) {
     res.status(500).json(err);
   }

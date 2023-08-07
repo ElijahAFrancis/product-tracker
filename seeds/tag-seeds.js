@@ -25,7 +25,7 @@ const tagData = [
   {
     tag_name: 'pop culture',
   },
-];
+];s
 
 const seedTags = () => Tag.bulkCreate(tagData);
 
